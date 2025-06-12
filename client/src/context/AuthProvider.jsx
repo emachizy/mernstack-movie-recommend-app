@@ -10,7 +10,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get("/auth/me"); // You should have this endpoint on backend
+        const res = await api.get("/auth/profile", { withCredentials: true });
         setUser(res.data.user);
       } catch (err) {
         console.error(err);
@@ -23,19 +23,27 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await api.post("/auth/login", { email, password });
+    const res = await api.post(
+      "/auth/login",
+      { email, password },
+      { withCredentials: true }
+    );
     setUser(res.data.user);
     return res.data;
   };
 
   const register = async (name, email, password) => {
-    const res = await api.post("/auth/register", { name, email, password });
+    const res = await api.post(
+      "/auth/register",
+      { name, email, password },
+      { withCredentials: true }
+    );
     setUser(res.data.user);
     return res.data;
   };
 
   const logout = async () => {
-    await api.post("/auth/logout");
+    await api.post("/auth/logout", {}, { withCredentials: true });
     setUser(null);
   };
 

@@ -20,6 +20,7 @@ export const login = async (req, res) => {
     .cookie("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+
       sameSite: "Lax", // or "None" if using cross-site cookies
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
