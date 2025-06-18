@@ -10,7 +10,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await api.get("/auth/profile", { withCredentials: true });
+        const res = await api.get("/user/me", { withCredentials: true });
         setUser(res.data.user);
       } catch (err) {
         console.error(err);
@@ -29,6 +29,7 @@ const AuthProvider = ({ children }) => {
       { withCredentials: true }
     );
     setUser(res.data.user);
+
     return res.data;
   };
 
@@ -44,13 +45,14 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await api.post("/auth/logout", {}, { withCredentials: true });
+    console.log("User logged out");
     setUser(null);
   };
 
   if (loading) return null; // Or show spinner
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, setUser, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

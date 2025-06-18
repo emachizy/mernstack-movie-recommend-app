@@ -1,14 +1,21 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
-import useAuth from "../context/AuthContext";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
+import useAuth from "../context/AuthContext.jsx";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleLogout = async () => {
+    console.log("Logout button clicked");
+    await logout();
+    console.log("User logged out");
+    navigate("/"); // Redirect to login or homepage
+  };
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -24,7 +31,9 @@ const NavBar = () => {
           path: "/profile",
         }
       : { name: "Login", path: "/login" },
-    user && { name: "Logout", path: "/logout" },
+    user
+      ? { name: <p>Hello {user.email}</p> }
+      : { name: "Profile", path: "/profile" },
   ].filter(Boolean);
 
   return (
@@ -36,9 +45,9 @@ const NavBar = () => {
         </Link>
 
         {/* Desktop Links */}
-        <ul className="hidden md:flex space-x-6 text-gray-800 font-medium relative">
-          {navLinks.map((link) => (
-            <li key={link.name}>
+        <ul className="hidden md:flex space-x-6 text-gray-800 font-medium relative items-center">
+          {navLinks.map((link, idx) => (
+            <li key={idx}>
               <NavLink
                 to={link.path}
                 className={({ isActive }) =>
@@ -53,6 +62,17 @@ const NavBar = () => {
               </NavLink>
             </li>
           ))}
+
+          {user && (
+            <li>
+              <button
+                onClick={handleLogout}
+                className="text-gray-800 hover:text-secondary transition-colors duration-300 cursor-pointer"
+              >
+                Logout
+              </button>
+            </li>
+          )}
         </ul>
 
         {/* Mobile Menu Toggle */}
@@ -67,8 +87,8 @@ const NavBar = () => {
       {isOpen && (
         <div className="md:hidden px-4 pb-4">
           <ul className="flex flex-col space-y-8 pl-6 text-gray-800 font-medium">
-            {navLinks.map((link) => (
-              <li key={link.name}>
+            {navLinks.map((link, idx) => (
+              <li key={idx}>
                 <NavLink
                   to={link.path}
                   className={({ isActive }) =>
@@ -84,6 +104,19 @@ const NavBar = () => {
                 </NavLink>
               </li>
             ))}
+            {user && (
+              <li>
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsOpen(false);
+                  }}
+                  className="text-left w-full text-gray-800 hover:text-secondary transition-colors duration-300"
+                >
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       )}

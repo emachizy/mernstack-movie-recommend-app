@@ -55,14 +55,14 @@ export const register = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res
-    .cookie("jwt", "", {
-      httpOnly: true,
-      expires: new Date(0),
-    })
-    .json({ message: "Logged out" });
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Lax",
+  });
 };
 
 export const getProfile = async (req, res) => {
-  res.json(req.user);
+  const user = await User.findById(req.user.userId).select("name email _id");
+  res.json({ user });
 };
