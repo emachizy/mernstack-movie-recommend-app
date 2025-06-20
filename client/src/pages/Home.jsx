@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { searchMovies, getPopularMovies } from "../services/tmdb";
 import MovieCard from "../components/MovieCard";
 import MovieCarousel from "../components/MovieCarousel";
+import RecommendationsPage from "../components/RecommendationsPage";
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -25,10 +26,10 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="relative">
       <form
         onSubmit={handleSearch}
-        className="bg-white px-4 py-0.5 max-w-4xl flex justify-between m-auto rounded-full"
+        className="bg-white px-4 py-0.5 w-full max-w-4xl flex justify-between mx-auto rounded-full absolute top-10 z-10 md:left-48"
       >
         <input
           className="input w-4/5 focus:outline-none"
@@ -41,7 +42,7 @@ const Home = () => {
           Search
         </button>
       </form>
-      <div>
+      <div className="inset-0">
         <MovieCarousel />
       </div>
 
@@ -55,6 +56,7 @@ const Home = () => {
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
+        <RecommendationsPage />
       </div>
     </div>
   );

@@ -12,8 +12,10 @@ const userSchema = new mongoose.Schema({
       movieId: String,
       title: String,
       posterPath: String,
+      genres: [String],
     },
   ],
+  reviews: [{ movieId: String, content: String, rating: Number }],
 });
 
 // Hash password before saving

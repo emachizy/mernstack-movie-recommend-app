@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { ToastContainer } from "react-toastify";
 import ReactModal from "react-modal";
+import FavoritesPage from "./components/FavoritesPage.jsx";
 
 function App() {
   ReactModal.setAppElement("#root");
@@ -28,6 +29,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+              <FavoritesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/favorites"
+          element={
+            <ProtectedRoute>
+              <FavoritesPage />
             </ProtectedRoute>
           }
         />
