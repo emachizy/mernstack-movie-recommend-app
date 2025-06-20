@@ -3,15 +3,24 @@ import { Link } from "react-router-dom";
 const MovieCard = ({ movie }) => {
   return (
     <Link to={`/movie/${movie.id}`}>
-      <div className="rounded overflow-hidden shadow-lg bg-white transition">
+      <div className="relative rounded overflow-hidden shadow-lg transition max-h-96 group">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
-          className="w-full h-72 object-cover hover:scale-[1.02] transition-transform duration-300"
+          className="w-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <div className="p-4">
-          <h3 className="font-bold text-lg">{movie.title}</h3>
-          <p className="text-sm text-gray-600">{movie.release_date}</p>
+
+        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end items-start pl-4 pb-6 text-white px-4">
+          <div className="mb-10">
+            <Link
+              to={`/movie/${movie.id}`}
+              className="px-8 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition"
+            >
+              ▶
+            </Link>
+          </div>
+          <h3 className="font-bold text-xl mb-2 text-center">{movie.title}</h3>
+          <p className="text-sm">{movie.release_date}</p>
         </div>
       </div>
     </Link>

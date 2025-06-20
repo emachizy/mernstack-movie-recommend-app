@@ -1,15 +1,25 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getMovieDetails } from "../services/tmdb.js";
+import { getMovieDetails, getMovieTrailer } from "../services/tmdb.js";
+import FavoriteButton from "../components/FavoriteButton.jsx";
+import YouTube from "react-youtube";
+import Modal from "react-modal";
 
 const MovieDetails = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
+  const [trailer, setTrailer] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
       const data = await getMovieDetails(id);
+      const trailerData = await getMovieTrailer(id);
       setMovie(data);
+      setTrailer(trailerData);
     };
     fetchDetails();
   }, [id]);
@@ -40,6 +50,42 @@ const MovieDetails = () => {
           <div className="mt-2">
             <strong>Genres:</strong>{" "}
             {movie.genres.map((genre) => genre.name).join(", ")}
+          </div>
+          <div className="flex gap-2 mt-2">
+            <FavoriteButton movie={movie} />
+            <div>
+              {trailer && (
+                <div className="">
+                  <button
+                    onClick={openModal}
+                    className="px-6 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition"
+                  >
+                    ▶ Watch Trailer
+                  </button>
+
+                  <Modal
+                    isOpen={isModalOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="Trailer Modal"
+                    className="bg-black max-w-4xl mx-auto mt-20 p-4 rounded shadow-lg outline-none"
+                    overlayClassName="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-start"
+                  >
+                    <div className="flex justify-end">
+                      <button
+                        onClick={closeModal}
+                        className="text-white text-xl mb-2"
+                      >
+                        ✖
+                      </button>
+                    </div>
+                    <YouTube
+                      videoId={trailer.key}
+                      opts={{ width: "100%", height: "390" }}
+                    />
+                  </Modal>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -8,8 +8,10 @@ import NavBar from "./components/NavBar";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import { ToastContainer } from "react-toastify";
+import ReactModal from "react-modal";
 
 function App() {
+  ReactModal.setAppElement("#root");
   const { user } = useAuth();
 
   return (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { searchMovies, getPopularMovies } from "../services/tmdb";
 import MovieCard from "../components/MovieCard";
+import MovieCarousel from "../components/MovieCarousel";
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
@@ -8,7 +9,6 @@ const Home = () => {
 
   const fetchPopular = async () => {
     const data = await getPopularMovies();
-    console.log("Fetched popular movies data:", data);
 
     setMovies(data);
   };
@@ -25,7 +25,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="p-6">
+    <div className="p-">
       <form
         onSubmit={handleSearch}
         className="bg-white px-4 py-0.5 max-w-4xl mb-6 flex justify-between m-auto rounded-full"
@@ -41,8 +41,11 @@ const Home = () => {
           Search
         </button>
       </form>
+      <div>
+        <MovieCarousel />
+      </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
         {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}

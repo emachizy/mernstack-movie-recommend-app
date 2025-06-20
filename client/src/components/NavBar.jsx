@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, Navigate, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import useAuth from "../context/AuthContext.jsx";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -14,7 +14,7 @@ const NavBar = () => {
     console.log("Logout button clicked");
     await logout();
     console.log("User logged out");
-    navigate("/"); // Redirect to login or homepage
+    Navigate("/");
   };
 
   const navLinks = [

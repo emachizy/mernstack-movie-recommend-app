@@ -31,3 +31,15 @@ export const getMovieDetails = async (movieId) => {
   const res = await tmdb.get(`/movie/${movieId}`);
   return res.data;
 };
+
+export const getMovieTrailer = async (movieId) => {
+  const res = await tmdb.get(`/movie/${movieId}/videos`);
+  return res.data.results.find(
+    (video) => video.type === "Trailer" && video.site === "YouTube"
+  );
+};
+
+export const getGenres = async () => {
+  const res = await tmdb.get("/genre/movie/list");
+  return res.data.genres; // [{ id: 28, name: "Action" }, ...]
+};
