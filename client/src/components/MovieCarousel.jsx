@@ -60,13 +60,17 @@ const MovieCarousel = () => {
                   className="w-full h-[60vh] md:h-screen object-cover"
                 />
                 <div className="p-4 pt-20 md:p-20 absolute inset-0 w-full bg-gradient-to-tr from-black/80 to-white/10">
-                  <h1 className="text-6xl font-bold max-w-md">{movie.title}</h1>
+                  <h1 className="text-2xl md:text-6xl font-bold max-w-md">
+                    {movie.title}
+                  </h1>
 
-                  <div className="flex gap-2.5">
-                    <p className="text-sm text-gray-300 mt-4">
+                  <div className="flex gap-2.5 mt-4">
+                    <p className="text-sm text-gray-300">
                       ⭐ {movie.vote_average}
                     </p>
-                    <p className="">{getGenreNames(movie.genre_ids)}</p>
+                    <p className="bg-red-600 py-1 px-2 rounded-full text-sm">
+                      {getGenreNames(movie.genre_ids)}
+                    </p>
                   </div>
                   <p className="my-4 max-w-md">{movie.overview}</p>
                   <div className="mt-8">

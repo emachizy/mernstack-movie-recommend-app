@@ -25,10 +25,10 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="p-">
+    <div className="">
       <form
         onSubmit={handleSearch}
-        className="bg-white px-4 py-0.5 max-w-4xl mb-6 flex justify-between m-auto rounded-full"
+        className="bg-white px-4 py-0.5 max-w-4xl flex justify-between m-auto rounded-full"
       >
         <input
           className="input w-4/5 focus:outline-none"
@@ -45,10 +45,16 @@ const Home = () => {
         <MovieCarousel />
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
+      <div>
+        <div>
+          <h2 className="text-2xl text-white">Popular Movies</h2>
+          <div className="bg-red-600 h-2 w-24 mb-4 rounded-xl"></div>
+        </div>
+        <div className=" mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ">
+          {movies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </div>
       </div>
     </div>
   );

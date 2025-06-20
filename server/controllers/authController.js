@@ -60,9 +60,16 @@ export const logout = (req, res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: "Lax",
   });
+  res.status(200).json({ message: "Logged out successfully" });
 };
 
 export const getProfile = async (req, res) => {
-  const user = await User.findById(req.user.userId).select("name email _id");
-  res.json({ user });
+  try {
+    const user = await User.findById(req.user.userId).select("name email _id");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ user });
+  } catch (err) {
+    console.error("Error in getProfile:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 };

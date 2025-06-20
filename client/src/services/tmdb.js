@@ -27,6 +27,11 @@ export const getPopularMovies = async () => {
   }
 };
 
+export const getTopRatedMovies = async () => {
+  const res = await tmdb.get("/movie/top_rated");
+  return res.data.results || [];
+};
+
 export const getMovieDetails = async (movieId) => {
   const res = await tmdb.get(`/movie/${movieId}`);
   return res.data;

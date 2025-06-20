@@ -24,7 +24,7 @@ const MovieDetails = () => {
     fetchDetails();
   }, [id]);
 
-  if (!movie) return <div class="spinner mx-auto relative top-52"></div>;
+  if (!movie) return <div className="spinner mx-auto relative top-52"></div>;
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
