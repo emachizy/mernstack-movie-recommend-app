@@ -25,10 +25,9 @@ function App() {
         {!user && <Route path="/register" element={<Register />} />}
         <Route path="/movie/:id" element={<MovieDetails />} />
         <Route
-          path="/profile"
+          path="/favorites"
           element={
             <ProtectedRoute>
-              <Profile />
               <FavoritesPage />
             </ProtectedRoute>
           }
@@ -38,6 +37,14 @@ function App() {
           element={
             <ProtectedRoute>
               <FavoritesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

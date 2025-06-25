@@ -73,6 +73,13 @@ const NavBar = () => {
                   >
                     ❤️ My Favorites
                   </NavLink>
+                  <NavLink
+                    to="/profile"
+                    onClick={() => setDropdownOpen(false)}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    🧕🏿 Profile
+                  </NavLink>
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -127,14 +134,6 @@ const NavBar = () => {
 
             {user && (
               <>
-                <li className="flex items-center space-x-2">
-                  <img
-                    src={user.avatar || "/default-avatar.png"}
-                    alt="Profile"
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                  <span>{user.email}</span>
-                </li>
                 <li>
                   <NavLink
                     to="/favorites"
@@ -142,6 +141,15 @@ const NavBar = () => {
                     className="hover:text-secondary transition-colors"
                   >
                     ❤️ My Favorites
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/profile"
+                    onClick={() => setIsOpen(false)}
+                    className="hover:text-secondary transition-colors"
+                  >
+                    🧕🏿 Profile
                   </NavLink>
                 </li>
                 <li>

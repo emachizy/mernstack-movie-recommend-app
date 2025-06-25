@@ -183,3 +183,27 @@ export const getRecommendations = async (req, res) => {
     res.status(500).json({ message: "Failed to generate recommendations" });
   }
 };
+
+export const updateUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+
+    if (req.body.password) {
+      user.password = req.body.password; // Will be hashed via pre-save hook
+    }
+
+    const updatedUser = await user.save();
+    res.json({
+      _id: updatedUser._id,
+      username: updatedUser.username,
+      email: updatedUser.email,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
