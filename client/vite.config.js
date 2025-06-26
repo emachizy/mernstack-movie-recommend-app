@@ -5,11 +5,17 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "./",
+  publicDir: "public",
   plugins: [
     react(),
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"], // include file types explicitly
+        globIgnores: ["**/node_modules/**/*", "sw.js", "workbox-*.js"],
+      },
       manifest: {
         name: "Movie Recommendation App",
         short_name: "MovieApp",
@@ -32,4 +38,7 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    outDir: "dist", // make sure this matches your deployment output folder
+  },
 });
