@@ -15,7 +15,10 @@ connectDB();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://mernstack-movie-recommend-app.vercel.app",
+    ],
     credentials: true,
   })
 );
